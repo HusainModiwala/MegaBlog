@@ -83,6 +83,36 @@ class Service{
             console.log('error',error);
         }
     }
+
+    //file services
+    async uploadFile(file){
+        try {
+            return await this.storage.createFile(
+                config.appwriteBucketId,
+                ID.unique(),
+                file
+            )
+        } catch (error) {
+            console.log('error', error);
+        }
+    }
+
+    async deleteFile(fileId){
+        try {
+            await this.storage.deleteFile(
+                config.appwriteBucketId,
+                fileId
+            )
+            return true;
+        } catch (error) {
+            console.log('error', error);
+            return false;
+        }
+    }
+
+    getPreview(fileId){
+        return this.storage.getFilePreview(config.appwriteBucketId, fileId)
+    }
 }
 
 const service = new Service();
